@@ -9,6 +9,11 @@ export default defineUserConfig({
     // 设置浏览器标签页图标
     ["link", { rel: "icon", href: "/logo.png" }],
   ],
+  // plugins: [[
+  //   "@vuepress/last-updated",{
+
+  //   }
+  // ]],
   theme: recoTheme({
     style: "@vuepress-reco/style-default",
     logo: "/logo.png",

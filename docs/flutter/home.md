@@ -1,5 +1,6 @@
 ---
 title: 生成签名文件
+lastUpdated: true
 ---
 
 ## 生成签名文件
@@ -8,4 +9,4 @@ title: 生成签名文件
 
 yarn global add @vuepress-reco/theme-cli@1.0.7
 theme-cli init
-测试
+测试 bababab
