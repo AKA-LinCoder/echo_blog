@@ -8,6 +8,13 @@ export default defineUserConfig({
   head: [
     // 设置浏览器标签页图标
     ["link", { rel: "icon", href: "/logo.png" }],
+    [
+      "meta",
+      {
+        name: "viewport",
+        content: "width=device-width,initial-scale=1,user-scalable=no",
+      },
+    ],
   ],
   // plugins: [[
   //   "@vuepress/last-updated",{
@@ -23,6 +30,14 @@ export default defineUserConfig({
     docsBranch: "main",
     docsDir: "example",
     lastUpdatedText: "上次更新",
+    notFound: [
+      "这里什么都没有",
+      "我们怎么到这来了？",
+      "这是一个 404 页面",
+      "看起来我们进入了错误的链接",
+    ],
+    backToHome: "返回首页",
+
     // series 为原 sidebar
     series: {
       "/docs/theme-reco/": [
@@ -58,11 +73,12 @@ export default defineUserConfig({
         link: "/blogs/other/guide",
       },
       { text: "目录", link: "/categories/reco/1/" },
-      { text: "Tags", link: "/tags/tag1/1/" },
+      { text: "鸿蒙", link: "/docs/harmony-os/home" },
+      { text: "测试", link: "/docs/python-test/home" },
       {
         text: "app",
         children: [
-          { text: "flutter", link: "/docs/flutter/home" },
+          { text: "flutter", link: "/docs/flutter/home" }, 
           { text: "ios", link: "/blogs/other/guide" },
           { text: "Android", link: "/blogs/other/guide" },
         ],
@@ -137,4 +153,5 @@ export default defineUserConfig({
     // },
   }),
   // debug: true,
+  lang: "zh-CN",
 });

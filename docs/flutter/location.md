@@ -1,5 +1,6 @@
 ---
 title: 高德地图定位
+lastUpdated: true
 ---
 
 ## 相关包导入
