@@ -11,23 +11,24 @@ Pytest
 Allure
 YAML
 XPATH
-图像识别 
+图像识别
 Jenkins
 Mysql
 Redis
 
 # Docker
 
-Docker就是对Linux容器的封装，提供了一些简单的接口；Linux容器的优点：资源占用少。启动速度快，体积很小，就是一个进程，可以方便启动
-Docker将应用程序以及依赖包打在一个文件中，当运行这个文件的时候就会生成一个Linux容器，程序在容器中运行和在物理机上运行效果一样
-Docker三大用途
+Docker 就是对 Linux 容器的封装，提供了一些简单的接口；Linux 容器的优点：资源占用少。启动速度快，体积很小，就是一个进程，可以方便启动
+Docker 将应用程序以及依赖包打在一个文件中，当运行这个文件的时候就会生成一个 Linux 容器，程序在容器中运行和在物理机上运行效果一样
+Docker 三大用途
+
 1. 提供一次性的环境
 2. 提供弹性的云服务
 3. 组建微服务架构
 
-## 
+##
 
-1. Docker安装
+1. Docker 安装
 
 ```
 curl -sSL https://get.daocloud.io/docker | sh
@@ -36,14 +37,19 @@ curl -fsSL https://get.docker.com -o get-docker.sh
 sudo sh get-docker.sh
 点击回车
 ```
-2. 启动Docker
+
+2. 启动 Docker
+
 ```
 systemctl start docker
 ```
-## Image 文件
-Docker把应用程序以及依赖包打包到Image文件中，Image文件本身也是一个文件，是一个特殊的文件系统，通过Image文件可以创建Docker容器，Image文件可以看作是容器的模板，一个Image文件可以创建多个同时运行的容器
 
-## Docker常见命令
+## Image 文件
+
+Docker 把应用程序以及依赖包打包到 Image 文件中，Image 文件本身也是一个文件，是一个特殊的文件系统，通过 Image 文件可以创建 Docker 容器，Image 文件可以看作是容器的模板，一个 Image 文件可以创建多个同时运行的容器
+
+## Docker 常见命令
+
 ```
     docker commit -m="提交信息" -a="作者" 容器id 镜像名:版本号
     docker cp 容器id:容器内路径 本地路径 #将容器内文件拷贝到本地
@@ -65,17 +71,21 @@ Docker把应用程序以及依赖包打包到Image文件中，Image文件本身�
     docker rmi -f 镜像id #删除镜像
     docker run -it ubuntu /bin/bash #启动一个容器
 ```
-## 实战Docker搭建交易系统
 
-需要五个容器分别存放 
-- MySql数据库
-- Minio对象存储
+## 实战 Docker 搭建交易系统
+
+需要五个容器分别存放
+
+- MySql 数据库
+- Minio 对象存储
 - 校园二手交易系统后端
 - 校园二手交易系统前端
 - Redis
 
 ### docker-compose
+
 安装
+
 ```
  curl -L "https://get.daocloud.io/docker/compose/releases/latest/download/1.27.3/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 
@@ -83,17 +93,23 @@ Docker把应用程序以及依赖包打包到Image文件中，Image文件本身�
  sudo curl -L "https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 
 ```
-赋予docker-compose可执行权限
+
+赋予 docker-compose 可执行权限
+
 ```
 chmod +x /usr/local/bin/docker-compose
 ```
+
 验证 Docker Compose 是否安装成功
+
 ```
 docker-compose --version
 docker login --username=fengzx120_tcpjw registry.cn-shanghai.aliyuncs.com
 fzx19890120
 ```
-导入docker-compose.yml文件
+
+导入 docker-compose.yml 文件
+
 ```
 version: '3.3'
 services:
@@ -152,7 +168,7 @@ services:
             # 更改为同学们自己虚拟机的IP
             MINIO_IP: 192.168.2.171
         network_mode: "host"
-        
+
     trading_system_frontend:
         container_name: trading_system_frontend
         restart: always
@@ -161,16 +177,61 @@ services:
             - trading_system
         network_mode: "host"
 ```
-修改其中minio的IP为虚拟机本机IP
+
+修改其中 minio 的 IP 为虚拟机本机 IP
 直接命令
+
 ```
 docker-compose up -d
 ```
 
 关闭防火墙
+
 ```
 firewall-cmd --state
 systemctl stop firewalld.service
 ```
-到minio中新建一个bucket
-连接mysql数据库并倒入sql
+
+新建的云服务器需要把 IP 那些添加到安全组，否则无法连接
+
+到 minio 中新建一个 bucket
+新建了 bucket 后需要将这个 bucket 的 Access Pollcy 的权限设置为 public
+
+
+minio 的账号密码在 docker-compose.yml 里面找到
+
+连接 mysql 数据库并倒入 sql
+密码william
+
+## 处理IP变化后需要重新部署的情况
+
+- 先查看当前docker
+```
+docker ps -a
+```
+- 强制删除容器
+```
+docker rm -f 容器id
+```
+- 查看是否删除成功
+```
+docker ps -a
+```
+- 删除镜像
+```
+docker images #查看镜像
+docker rmi 镜像id
+docker images #查看镜像
+```
+- 重启虚拟机
+- 修改docker-compose.yml 文件中 minio 的 IP
+- 检查防火墙状态
+- 进入docker-compose.yml所在文件夹，删除除了docker-compose.yml以外的所有文件
+```
+rm -rf xxx/
+```
+- 重新启动docker
+```
+systemctl start docker
+```
+- 重新 docker-compose up -d
