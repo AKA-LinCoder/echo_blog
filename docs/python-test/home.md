@@ -197,41 +197,84 @@ systemctl stop firewalld.service
 到 minio 中新建一个 bucket
 新建了 bucket 后需要将这个 bucket 的 Access Pollcy 的权限设置为 public
 
-
 minio 的账号密码在 docker-compose.yml 里面找到
 
 连接 mysql 数据库并倒入 sql
-密码william
+密码 william
 
-## 处理IP变化后需要重新部署的情况
+## 处理 IP 变化后需要重新部署的情况
 
-- 先查看当前docker
+- 先查看当前 docker
+
 ```
 docker ps -a
 ```
+
 - 强制删除容器
+
 ```
 docker rm -f 容器id
 ```
+
 - 查看是否删除成功
+
 ```
 docker ps -a
 ```
+
 - 删除镜像
+
 ```
 docker images #查看镜像
 docker rmi 镜像id
 docker images #查看镜像
 ```
+
 - 重启虚拟机
-- 修改docker-compose.yml 文件中 minio 的 IP
+- 修改 docker-compose.yml 文件中 minio 的 IP
 - 检查防火墙状态
-- 进入docker-compose.yml所在文件夹，删除除了docker-compose.yml以外的所有文件
+- 进入 docker-compose.yml 所在文件夹，删除除了 docker-compose.yml 以外的所有文件
+
 ```
 rm -rf xxx/
 ```
-- 重新启动docker
+
+- 重新启动 docker
+
 ```
 systemctl start docker
 ```
+
 - 重新 docker-compose up -d
+
+### Pycharm 简单学习
+# 代码格式化
+# windows：Ctrl+Alt+L
+# Mac:Command+Option+L
+# 快速异常捕获，选中代码块
+# windows：Ctrl+Alt+T
+# Mac:Command+Option+T
+
+# 向右向左缩进制表位
+# 向左 Shift+Tab
+# 向右:Tab
+
+# 向上插入新行
+# windows：Ctrl+Alt+Enter
+# Mac:Command+Option+Enter
+
+# 向下 插入新行
+# Shift+Enter
+
+# 快速切换文件
+ Ctrl+E
+
+文件头注释
+打开设置 -> Editor -> File and Code Templates -> Python Script 天津注释
+```
+# @Time    : ${DATE} 
+# @Author  : ${USER}
+# @File    : ${NAME}.py
+```
+## 下载Selenium
+打开Pycharm，点击File->Settings->Project->Project Interpreter，点击+，搜索Selenium，点击Install Package，等待安装完成。
