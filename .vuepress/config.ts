@@ -85,6 +85,13 @@ export default defineUserConfig({
           { text: "Hadoop", link: "/docs/flutter/home" },
         ],
       },
+      {
+        text: "软考",
+        children: [
+          { text: "系统架构设计师", link: "/docs/software-engineering-examination/architect" }, 
+          { text: "Hadoop", link: "/docs/flutter/home" },
+        ],
+      },
       { text: "鸿蒙", link: "/docs/harmony-os/home" },
       { text: "测试", link: "/docs/python-test/home" },
       {
